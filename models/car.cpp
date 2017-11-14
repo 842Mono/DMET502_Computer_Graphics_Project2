@@ -1,14 +1,9 @@
-#include <GL/glew.h>
-#include <GL/glut.h>
-#include <GL/gl.h>
-#include <GL/glu.h>
-#include <GL/glext.h>
-
-
+//#include "../globals.cpp"
 
 //car
-	glPushMatrix();
-    glTranslated(-5, 0, -5);
+glPushMatrix();
+    glTranslated(carTranslationx, carTranslationy, carTranslationz);
+	glRotated(carRotationY, 0,1,0);
 
     //tyre spaces
     double hzlSpace = 1.0;
@@ -38,6 +33,16 @@
         gluQuadricDrawStyle(qobj,GLU_FILL);
         gluCylinder(qobj, 0.5, 0.5, 2.0, 40,40);
     glPopMatrix();
+
+
+    //riders' seats
+    glPushMatrix();
+        glRotated(-10,0,0,1);
+        glScaled(1.6,0.3,1);
+        glTranslated(0.4, 1.4 ,0.45);
+        glutSolidCube(0.8);
+	glPopMatrix();
+
 
     //front
     glPushMatrix();

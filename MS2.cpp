@@ -6,6 +6,7 @@
 
 #include <stdio.h>
 #include <iostream>
+#include <math.h>
 
 #include "./globals.cpp"
 
@@ -57,19 +58,16 @@ void camera(void)
 void display(void)
 {
 	SetupLights();
-
 	camera();
 
-	//visualisation
+	//visualisations
 	axis(0.5); // z-axis
-
 	glPushMatrix();
-	glRotated(90, 0,1.0, 0);
-	axis(0.9); //x  // y-axis
-	glRotated(-90.0, 1, 0, 0);
-	axis(1.5); //y   // z-axis
+		glRotated(90, 0,1.0, 0);
+		axis(0.9); //x  // y-axis
+		glRotated(-90.0, 1, 0, 0);
+		axis(1.5); //y   // z-axis
 	glPopMatrix();
-
 
 	// glPushMatrix();
 	// 	glTranslated(0, 1.0 ,0); // torus at (0,1,0)
@@ -78,9 +76,11 @@ void display(void)
 	// glPopMatrix();
 
 	glPushMatrix();
-	glTranslated(0.5, 0.5, 0.5); // big cube at (0.5, 0.5, 0.5)
-	glutWireCube(1.0);
+		glTranslated(0.5, 0.5, 0.5); // big cube at (0.5, 0.5, 0.5)
+		glutWireCube(1.0);
 	glPopMatrix();
+
+
 
 	#include "./models/car.cpp"
 
@@ -88,55 +88,18 @@ void display(void)
 	
 	#include "./models/plane.cpp"
 
+	#include "./models/baloon.cpp"
 
+	//ship?
 
+	#include "./models/ufo.cpp"
 
+	#include "./models/rocket.cpp"
 
-
-	
-
-
-	//ship
-
-	//ufo
-
-
-
-	//tank
-
-
-
-
-
-
-
-
-
-	// glPushMatrix();
-	// glTranslated(1.0,sphereTranslation,0); // sphere at (1,1,0)
-	// glutWireSphere(0.25, 10, 10);
-	// glPopMatrix();
-
-	// glPushMatrix();
-	// glTranslated(1,1,1);
-	// glRotated(potRotation, 0,1,0);
-	// glutWireTeapot(0.2); // teapot at (1,1,1)
-	// glPopMatrix();
-
-	// glPushMatrix();
-	// glTranslated(1.0, 0 ,0); // dodecahedron at (1,0,0)
-	// glScaled(0.15, 0.15, 0.15);
-	// glutWireDodecahedron();
-	// glPopMatrix();
-
-	// glPushMatrix();
-	// glTranslated(0, 1.0 ,1.0); // small cube at (0,1,1)
-	// glutWireCube(0.25);
-	// glPopMatrix();
+	//tank?
 
 	glFlush();
 }
-
 
 #include "./keyboard.cpp"
 #include "./animation.cpp"
@@ -153,17 +116,29 @@ void display(void)
 int main(int argc, char **argv)
 {
 	glutInit(&argc, argv);
-	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
+	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB); // | GLUT_DEPTH);
 	glutInitWindowSize(640,480);
 	glutInitWindowPosition(100, 100);
 	glutCreateWindow("Grrrrrrrrrrrrrrr");
 	GLenum err = glewInit();
+
+	initBezier();
+
 	glutDisplayFunc(display);
 	glutKeyboardFunc(keyboard);
 	glutKeyboardUpFunc(keyUp);
 	glutIdleFunc(Animation);
 	glutSpecialFunc(keypressSpecial);
-	glClearColor(1.0f, 1.0f, 1.0f,0.0f); // background is white
+	glClearColor(0.878, 1.000, 1.000, 0);//glClearColor(1.0f, 1.0f, 1.0f,0.0f); // background is white
+	
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
+	glEnable(GL_NORMALIZE);
+	glEnable(GL_COLOR_MATERIAL);
+
+	glShadeModel(GL_SMOOTH);
+	
 	glViewport(0, 0, 640, 480);
 	glutMainLoop();
 }

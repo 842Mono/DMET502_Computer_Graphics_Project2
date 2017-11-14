@@ -38,3 +38,47 @@ double copterRotation4 = 0;
 double copterXTrans = 3;
 double copterYTrans = 3;
 double copterZtrans = -4;
+
+double planeRotationY = 0;
+
+
+double planeTranslationx = -4; //1;
+double planeTranslationy = 0;
+double planeTranslationz = 0;
+
+
+double carTranslationx = -5;
+double carTranslationy = 0;
+double carTranslationz = -5;
+
+double carRotationY = 0;
+
+double baloonTranslationZ = -5;
+
+
+
+
+
+
+double ufoVerticalTranslation = 0;
+
+int p0[2];
+int p1[2];
+int p2[2];
+int p3[2];
+int tar=4;
+double res1[2];
+float t1 = 0;
+
+
+double* bezier(float t, int* p0,int* p1,int* p2,int* p3)
+{
+	res1[0]=pow((1-t),3)*p0[0]+3*t*pow((1-t),2)*p1[0]+3*pow(t,2)*(1-t)*p2[0]+pow(t,3)*p3[0];
+	res1[1]=pow((1-t),3)*p0[1]+3*t*pow((1-t),2)*p1[1]+3*pow(t,2)*(1-t)*p2[1]+pow(t,3)*p3[1];
+	return res1;
+}
+
+bool ufoVerticalToggle = true;
+
+double ufoXTranslation = 5;
+double ufoZTranslation = 5;
