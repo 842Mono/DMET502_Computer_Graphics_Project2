@@ -1,5 +1,6 @@
 glPushMatrix();
-    glTranslated(ufoXTranslation,ufoVerticalTranslation,ufoZTranslation);
+    glTranslated(0,ufoVerticalTranslation,9);
+    //glTranslated(ufoXTranslation,ufoVerticalTranslation,ufoZTranslation);
 
 
     //legs

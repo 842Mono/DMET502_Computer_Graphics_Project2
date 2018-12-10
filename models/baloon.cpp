@@ -1,5 +1,7 @@
 glPushMatrix();
-    glTranslated(0,0,baloonTranslationZ);
+    glTranslated(0,0,6);
+    //glTranslated(0,0,baloonTranslationZ);
+    glRotated(baloonRotAnim, 1,0,0);
 
     //far ropes
     glPushMatrix();

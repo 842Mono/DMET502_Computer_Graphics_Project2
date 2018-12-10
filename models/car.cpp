@@ -2,8 +2,9 @@
 
 //car
 glPushMatrix();
-    glTranslated(carTranslationx, carTranslationy, carTranslationz);
-	glRotated(carRotationY, 0,1,0);
+    glTranslated(carTranslationx,0,-9);
+    //glTranslated(carTranslationx, carTranslationy, carTranslationz);
+	//glRotated(carRotationY, 0,1,0);
 
     //tyre spaces
     double hzlSpace = 1.0;

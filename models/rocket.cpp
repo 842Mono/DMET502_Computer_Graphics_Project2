@@ -1,4 +1,6 @@
 glPushMatrix();
+    glTranslated(0,0,-6);
+    glTranslated(0,rocketVertical,0);
 
     //rear blades
     glColor3f(0.275, 0.510, 0.706);
@@ -20,8 +22,8 @@ glPushMatrix();
 	glPopMatrix();
 
 
-
-    glColor3f(0.729, 0.333, 0.827);
+    //top sphere
+    glColor3f(0.439, 0.502, 0.565);
     glPushMatrix();
         glScaled(0.6,1.4,0.6);
 	    glTranslated(0,1.4,0);
@@ -29,7 +31,8 @@ glPushMatrix();
     glPopMatrix();
 
 
-    glColor3f(1.000, 0.549, 0.000);
+    //body
+    glColor3f(0.467, 0.533, 0.600);
 	glPushMatrix();
 		glTranslated(0, 2, 0);
 		glRotated(90.0, 1, 0, 0);

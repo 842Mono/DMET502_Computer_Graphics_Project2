@@ -28,30 +28,51 @@ void axis(double length)
 
 void SetupLights()
 {
-	GLfloat mat_ambient[] = { 0.7f, 0.7f, 0.7, 1.0f };
-	GLfloat mat_diffuse[] = { 0.6f, 0.6f, 0.6, 1.0f };
-	GLfloat mat_specular[] = { 1.0f, 1.0f, 1.0, 1.0f };
-	GLfloat mat_shininess[] = { 50 };
-	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, mat_ambient);
-	glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
-	glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
-	glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
-	//set the light source properties
-	GLfloat lightIntensity[] = { 0.7f, 0.7f, 1, 1.0f };
-	GLfloat light_position[] = { -7.0f, 6.0f, 3.0f, 0.0f };
-	glLightfv(GL_LIGHT0, GL_POSITION, lightIntensity);
-	glLightfv(GL_LIGHT0, GL_DIFFUSE, lightIntensity);
+	// Enable Lighting for this OpenGL Program
+	glEnable(GL_LIGHTING);
+
+	// Enable Light Source number 0
+	// OpengL has 8 light sources
+	glEnable(GL_LIGHT0);
+
+	// Define Light source 0 ambient light
+	GLfloat ambient[] = { 0.1f, 0.1f, 0.1, 1.0f };
+	glLightfv(GL_LIGHT0, GL_AMBIENT, ambient);
+
+	// Define Light source 0 diffuse light
+	GLfloat diffuse[] = { 0.5f, 0.5f, 0.5f, 1.0f };
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse);
+
+	// Define Light source 0 Specular light
+	GLfloat specular[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+	glLightfv(GL_LIGHT0, GL_SPECULAR, specular);
+
+	// Finally, define light source 0 position in World Space
+	GLfloat light_position[] = { 0.0f, 10.0f, 0.0f, 1.0f };
+	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
 }
 
 void camera(void)
 {
-	glMatrixMode(GL_PROJECTION); // set the view volume shape
-	glLoadIdentity();
-	glOrtho(a1, a2, a3, a4, a5, a6);
-	glMatrixMode(GL_MODELVIEW); // position and aim the camera
-	glLoadIdentity();
-	gluLookAt(bx1, by1, bz1, bx2, by2, bz2, bx3, by3, bz3);
-	glClear(GL_COLOR_BUFFER_BIT); // clear the screen
+	if(top)
+	{
+		glMatrixMode(GL_PROJECTION); // set the view volume shape
+		glLoadIdentity();
+		glOrtho(a1, a2, a3, a4, a5, a6);
+		glMatrixMode(GL_MODELVIEW); // position and aim the camera
+		glLoadIdentity();
+		gluLookAt(1,isometric,0,  0,0,0,  0,1,0);
+	}
+	else
+	{
+		glMatrixMode(GL_PROJECTION); // set the view volume shape
+		glLoadIdentity();
+		glOrtho(a1, a2, a3, a4, a5, a6);
+		glMatrixMode(GL_MODELVIEW); // position and aim the camera
+		glLoadIdentity();
+		gluLookAt(bx1+cos(camRot)*isometric - isometric, by1, bz1+(sin(camRot))*isometric - isometric, bx2, by2, bz2, bx3, by3, bz3);
+	}
+	
 	glColor3d(0,0,0); // draw black lines
 }
 
@@ -59,6 +80,8 @@ void display(void)
 {
 	SetupLights();
 	camera();
+
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the screen
 
 	//visualisations
 	axis(0.5); // z-axis
@@ -80,7 +103,7 @@ void display(void)
 		glutWireCube(1.0);
 	glPopMatrix();
 
-
+	#include "./models/hangar.cpp"
 
 	#include "./models/car.cpp"
 
@@ -97,6 +120,13 @@ void display(void)
 	#include "./models/rocket.cpp"
 
 	//tank?
+
+	// glPushMatrix();
+	// 	glTranslated(3,0,0);
+	// 	glScaled(2,2,2);
+	// 	triangularPrism();
+	// glPopMatrix();
+
 
 	glFlush();
 }
@@ -116,17 +146,18 @@ void display(void)
 int main(int argc, char **argv)
 {
 	glutInit(&argc, argv);
-	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB); // | GLUT_DEPTH);
+	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB | GLUT_DEPTH);
 	glutInitWindowSize(640,480);
 	glutInitWindowPosition(100, 100);
 	glutCreateWindow("Grrrrrrrrrrrrrrr");
-	GLenum err = glewInit();
+	//GLenum err = glewInit();
 
 	initBezier();
 
 	glutDisplayFunc(display);
 	glutKeyboardFunc(keyboard);
 	glutKeyboardUpFunc(keyUp);
+	
 	glutIdleFunc(Animation);
 	glutSpecialFunc(keypressSpecial);
 	glClearColor(0.878, 1.000, 1.000, 0);//glClearColor(1.0f, 1.0f, 1.0f,0.0f); // background is white

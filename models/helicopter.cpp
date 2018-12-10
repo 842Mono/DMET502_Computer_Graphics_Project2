@@ -1,7 +1,10 @@
 double legsSpace = 0.4;
 
 glPushMatrix();
-glTranslated(copterXTrans, copterYTrans, copterZtrans);
+	glRotated(ca2rot, 0, 1, 0);
+	glRotated(slightFront, -1,0,-1);
+	glTranslated(0,copterYTrans + verticalElevation,3);
+	//glTranslated(copterXTrans, copterYTrans, copterZtrans);
 
     //far leg
     glColor3f(0.7,0.7,0.7);
@@ -39,21 +42,56 @@ glTranslated(copterXTrans, copterYTrans, copterZtrans);
     glPushMatrix();
         glColor3f(0.741, 0.718, 0.420);
 		glTranslated(0,1.0,0); // cone at (1,0,1)
-		glRotated(copterRotation1, copterRotation2, copterRotation3, copterRotation4);
+		glRotated(90, 0, -1, 0);
 		glutSolidCone(0.2, 1.5, 20, 18);
     glPopMatrix();
 
     //tail
-    glColor3f(0.4,0.4,0.4);
-    glPushMatrix();
+	glColor3f(0.4,0.4,0.4);
+	glPushMatrix();
+		glTranslated(-1.2,1,0);
+		glRotated(copterTailRotation, 0,0,1);
+
+		glPushMatrix();
+			glRotated(20,0,0,1);
+			glRotated(90,1,0,0);
+			glRotated(90,0,-1,0);
+			glScaled(0.6, 0.07, 0.08);
+			//glTranslated(0.8, 17.5, -0.5);
+			glutSolidCube(1.0);
+		glPopMatrix();
+		
+		glPushMatrix();
+			glRotated(-30,0,0,1);
+			glRotated(90,1,0,0);
+			glRotated(90,0,-1,0);
+			glScaled(0.6, 0.07, 0.08);
+			//glTranslated(0.8, 17.5, -0.5);
+			glutSolidCube(1.0);
+		glPopMatrix();
+
+		glPushMatrix();
+			glRotated(75,0,0,1);
+			glRotated(90,1,0,0);
+			glRotated(90,0,-1,0);
+			glScaled(0.6, 0.07, 0.08);
+			//glTranslated(0.8, 17.5, -0.5);
+			glutSolidCube(1.0);
+		glPopMatrix();
+	glPopMatrix();
+
+	//tail circle
+	glColor3f(0.4,0.4,0.4);
+	glPushMatrix();
         glTranslated(-1.2,1,0);
-        glRotated(20,0,0,1);
-        glRotated(90,1,0,0);
-        glRotated(90,0,-1,0);
-        glScaled(0.6, 0.07, 0.2);
-        //glTranslated(0.8, 17.5, -0.5);
-        glutSolidCube(1.0);
-    glPopMatrix();
+		//glRotated(90.0, 1,0,0);
+		glutSolidTorus(0.05,0.3, 50,50);
+	glPopMatrix();
+	
+
+
+
+
 
     
     
@@ -95,6 +133,7 @@ glTranslated(copterXTrans, copterYTrans, copterZtrans);
     glPushMatrix();
         glColor3f(0.7,0.7,0.7);
 		glTranslated(0.5,1.7,0);
+		glRotated(copterBladesRotation, 0, 1, 0);
 		glPushMatrix();
 			//glTranslated(0.5,0.5,0.5);
 			glRotated(90,0,-1,0);
